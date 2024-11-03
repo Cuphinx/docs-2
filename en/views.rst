@@ -117,9 +117,9 @@ Another example, using if/elseif/else. Notice the colons:
      <h3>Hi unknown user</h3>
   <?php endif; ?>
 
-If you'd prefer using a templating language like
-`Twig <https://twig.symfony.com>`_, a subclass of View will bridge your
-templating language and CakePHP.
+If you'd prefer to use a templating language like
+`Twig <https://twig.symfony.com>`_, checkout the `CakePHP Twig Plugin
+<https://github.com/cakephp/twig-view>`__ 
 
 Template files are stored in **templates/**, in a folder named after the
 controller that uses the files, and named after the action it corresponds to.
@@ -252,9 +252,23 @@ as the ``content`` block.
     You should avoid using ``content`` as a block name in your application.
     CakePHP uses this for uncaptured content in extended views.
 
-You can get the list of all populated blocks using the ``blocks()`` method::
+Extending Layouts
+=================
 
-    $list = $this->blocks();
+Just like views, layouts can also be extended. Like views, you use ``extend()``
+to extend layouts. Layout extensions can update or replace blocks, and update or
+replace the content rendered by the child layout. For example if we wanted to
+wrap a block with additional markup you could do::
+
+    // Our layout extends the application layout.
+    $this->extend('application');
+    $this->prepend('content', '<main class="nosidebar">');
+    $this->append('content', '</main>');
+
+    // Output more markup.
+
+    // Remember to echo the contents of the previous layout.
+    echo $this->fetch('content');
 
 .. _view-blocks:
 

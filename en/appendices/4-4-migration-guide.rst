@@ -96,11 +96,23 @@ be removed in 5.0.
 - Use :ref:`controller-viewclasses` instead of defining view class mappings in
   ``RequestHandlerComponent``.
 
+The automatic view switching for 'ajax' requests offered by
+``RequestHandlerComponent`` is deprecated. Instead you can either
+handle this in a controller action or ``Controller.beforeRender`` callback
+with::
 
-PaginationComponent
--------------------
+    // In a controller action, or in beforeRender.
+    if ($this->request->is('ajax')) {
+        $this->viewBuilder()->setClassName('Ajax');
+    }
 
-The ``PaginationComponent`` is deprecated and will be removed in 5.0.
+Alternatively, you can have the HTML view class switch to the ``ajax`` layout as
+required in your controller actions or view templates.
+
+PaginatorComponent
+------------------
+
+The ``PaginatorComponent`` is deprecated and will be removed in 5.0.
 Use the ``Controller::$paginate`` property or the ``$settings`` parameter of
 ``Controller::paginate()`` method to specify required paging settings.
 
@@ -191,6 +203,12 @@ Controller
   controllers that need to perform content-type negotiation. View classes will
   need to implement the static method ``contentType()`` to participate in
   content-type negotiation.
+
+Core
+----
+
+* The previously experimental API for the :doc:`/development/dependency-injection` container,
+  introduced in CakePHP 4.2, is now considered stable.
 
 Database
 --------

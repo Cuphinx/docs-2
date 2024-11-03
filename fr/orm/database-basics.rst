@@ -554,16 +554,18 @@ Nous avons ensuite deux façons d'utiliser notre type dans nos modèles.
 Écraser le schéma reflected avec notre type personnalisé va activer dans la
 couche de base de données de CakePHP la conversion automatique de nos données
 JSON lors de la création de requêtes.
-Dans votre :ref:`méthode _initializeSchema() <saving-complex-types>` de
+Dans votre :ref:`méthode getSchema() <saving-complex-types>` de
 votre Table, ajoutez ceci::
 
     use Cake\Database\Schema\TableSchemaInterface;
 
     class WidgetsTable extends Table
     {
-        protected function _initializeSchema(TableSchemaInterface $schema)
+        public function getSchema(): TableSchemaInterface
         {
+            $schema = parent::getSchema();
             $schema->setColumnType('widget_prefs', 'json');
+
             return $schema;
         }
 
@@ -604,7 +606,7 @@ spécifique::
             $data = $schema->getColumn($column);
             $sql = $driver->quoteIdentifier($column);
             $sql .= ' JSON';
-            if (isset($data['null') && $data['null'] === false) {
+            if (isset($data['null']) && $data['null'] === false) {
                 $sql .= ' NOT NULL';
             }
             return $sql;

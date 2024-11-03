@@ -20,7 +20,7 @@ quaisquer adições, exclusões ou correções para a documentação.
     Consulte o *cookbook* do CakePHP praticamente em qualquer lugar. Disponível
     como PDF e EPUB, você pode lê-lo em diversos dispositivos, e também offline.
 
-    - `PDF <../_downloads/pt/CakePHPCookbook.pdf>`_
+    - `PDF <../_downloads/pt/CakePHPBook.pdf>`_
     - `EPUB <../_downloads/pt/CakePHP.epub>`_
     - `Código-fonte Original <https://github.com/cakephp/docs>`_
 
@@ -54,5 +54,5 @@ principais elementos existentes em uma aplicação construída com o CakePHP:
   lidam com a validação e a lógica de domínio em sua aplicação.
 
 .. meta::
-    :title lang=pt: .. CakePHP Cookbook arquivo mestre de documentação, criado por
-    :keywords lang=pt: modelo de documentos,documentação principal,camada de apresentação,documentação de projeto,guia rápido,código-fonte original,sphinx,liking,cookbook,validade,convenções,validação,cakephp,precisão,armazenamento e recuperação,coração,blog,projeto
+    :title lang=pt: .. CakePHP Book arquivo mestre de documentação, criado por
+    :keywords lang=pt: modelo de documentos,documentação principal,camada de apresentação,documentação de projeto,guia rápido,código-fonte original,sphinx,liking,book,validade,convenções,validação,cakephp,precisão,armazenamento e recuperação,coração,blog,projeto

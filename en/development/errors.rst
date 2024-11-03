@@ -124,13 +124,24 @@ exception is handled::
         }
     );
 
-If your ``Error.beforeRender`` event handler stops the event, error rendering
-will be skipped. You cannot skip rendering a response/output for caught
-exceptions.
+Within an ``Error.beforeRender`` handler you have a few options:
+
+* Stop the event to prevent rendering.
+* Return a string to skip rendering and use the provided string instead
+
+Within an ``Exception.beforeRender`` handler you have a few options:
+
+* Stop the event to prevent rendering.
+* Set the ``exception`` data attribute with ``setData('exception', $err)``
+  to replace the exception that is being rendered.
+* Return a response from the event listener to skip rendering and use
+  the provided response instead.
 
 .. versionadded:: 4.4.0
     Error and Exception events were added.
 
+.. versionchanged:: 4.5.0
+   The ``beforeRender`` events can now replace exceptions and replace rendering.
 
 .. _error-views:
 
@@ -217,7 +228,7 @@ If you want to control the entire exception rendering and logging process you
 can use the ``Error.exceptionRenderer`` option in **config/app.php** to choose
 a class that will render exception pages. Changing the ExceptionRenderer is
 useful when you want to change the logic used to create an error controller,
-choose the error template, or control how the overall rendering process.
+choose the error template, or control the overall rendering process.
 
 Your custom exception renderer class should be placed in **src/Error**. Let's
 assume our application uses ``App\Exception\MissingWidgetException`` to indicate
@@ -301,7 +312,7 @@ Custom Error Logging
 
 Error handlers use instances of ``Cake\Error\ErrorLoggingInterface`` to create
 log messages and log them to the appropriate place. You can replace the error
-logger using the ``Error.errorLogger`` configure value. An example error
+logger using the ``Error.logger`` configure value. An example error
 logger::
 
     namespace App\Error;
@@ -338,7 +349,8 @@ logger::
         }
     }
 
-Prior to CakePHP 4.4.0, you should implement ``logMessage()`` and ``log()``::
+Prior to CakePHP 4.4.0, you should implement ``logMessage()`` and ``log()``, and then
+replace the error logger using the ``Error.errorLogger`` configure value::
 
     namespace App\Error;
 
@@ -369,7 +381,7 @@ Prior to CakePHP 4.4.0, you should implement ``logMessage()`` and ``log()``::
     ErrorLoggerInterface was added.
 
 .. versionchanged:: 4.4.0
-    ``ErrorLoggerInterface::logException()`` and``ErrorLoggerInterface::logError()`` were added.
+    ``ErrorLoggerInterface::logException()`` and ``ErrorLoggerInterface::logError()`` were added.
 
 
 Custom Error Rendering
@@ -416,7 +428,7 @@ If your application contained the following exception::
 
     use Cake\Core\Exception\CakeException;
 
-    class MissingWidgetException extends Exception
+    class MissingWidgetException extends CakeException
     {
     }
 
@@ -424,8 +436,9 @@ You could provide nice development errors, by creating
 **templates/Error/missing_widget.php**. When in production mode, the above
 error would be treated as a 500 error and use the **error500** template.
 
-If your exceptions have a code between ``400`` and ``506`` the exception code
-will be used as the HTTP response code.
+Exceptions that subclass ``Cake\Http\Exception\HttpException``, will have their
+error code used as an HTTP status code if the error code is between ``400`` and
+``506``.
 
 The constructor for :php:exc:`Cake\\Core\\Exception\\CakeException` allows you to
 pass in additional data. This additional data is interpolated into the the
@@ -434,7 +447,7 @@ provide more context around your errors::
 
     use Cake\Core\Exception\CakeException;
 
-    class MissingWidgetException extends Exception
+    class MissingWidgetException extends CakeException
     {
         // Context data is interpolated into this format string.
         protected $_messageTemplate = 'Seems that %s is missing.';

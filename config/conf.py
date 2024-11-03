@@ -23,6 +23,7 @@ version_name = 'Strawberry'
 
 # Other versions that display in the version picker menu.
 version_list = [
+    {'name': '5.x', 'number': '5', 'title': '5.x Book'},
     {'name': '4.x', 'number': '4', 'current': True, 'title': '4.x Book'},
     {'name': '3.x', 'number': '3', 'title': '3.x Book'},
     {'name': '2.x', 'number': '2', 'title': '2.x Book'},
@@ -39,7 +40,7 @@ languages = ['en', 'pt_BR', 'es', 'ja', 'fr']
 
 # The GitHub branch name for this version of the docs
 # for edit links to point at.
-branch = '4.x'
+branch = '4.next'
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = []
@@ -55,7 +56,7 @@ html_sidebars = {
 }
 
 language = os.getenv('LANG') or 'en'
-html_use_opensearch = 'https://book.cakephp.org/4/' + language
+html_use_opensearch = 'https://book.cakephp.org/' + version + '/' + language
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -63,7 +64,7 @@ html_use_opensearch = 'https://book.cakephp.org/4/' + language
 # (source start file, target name, title, author,
 # documentclass [howto/manual]).
 latex_documents = [
-    ('pdf-contents', 'CakePHPCookbook.tex', u'CakePHP Cookbook Documentation',
+    ('pdf-contents', 'CakePHPBook.tex', u'CakePHP Book',
      u'Cake Software Foundation', 'manual'),
 ]
 
@@ -72,7 +73,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'cakephpcookbook', u'CakePHP Cookbook Documentation',
+    ('index', 'cakephpbook', u'CakePHP Book',
      [u'CakePHP'], 1)
 ]
 
@@ -80,7 +81,7 @@ man_pages = [
 # -- Options for Epub output -------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'CakePHP Cookbook'
+epub_title = u'CakePHP Book'
 epub_author = u'Cake Software Foundation, Inc.'
 epub_publisher = u'Cake Software Foundation, Inc.'
 epub_copyright = u'%d, Cake Software Foundation, Inc.' % datetime.datetime.now().year
@@ -98,7 +99,7 @@ epub_scheme = 'URL'
 epub_identifier = 'https://cakephp.org'
 
 # A unique identification for the text.
-epub_uid = 'cakephpcookbook1393624653'
+epub_uid = 'cakephpbook1393624653'
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = [

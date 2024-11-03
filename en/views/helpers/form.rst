@@ -378,6 +378,7 @@ By default the ``control()`` method will employ the following widget templates::
 
     'inputContainer' => '<div class="input {{type}}{{required}}">{{content}}</div>'
     'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>'
+    'requiredClass' => 'required'
 
 In case of validation errors it will also use::
 
@@ -1813,12 +1814,12 @@ error messages per field.
 
 Example::
 
-    // If in TicketsTable you have a 'notEmpty' validation rule:
+    // If in TicketsTable you have a 'notEmptyString' validation rule:
     public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence('ticket', 'create')
-            ->notEmpty('ticket');
+            ->notEmptyString('ticket');
     }
 
     // And inside templates/Tickets/add.php you have:

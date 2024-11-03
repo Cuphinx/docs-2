@@ -308,11 +308,17 @@ The application's ``View`` class is automatically used as a fallback when no
 other view can be selected based on the requests' ``Accept`` header or routing
 extension. If your application needs to perform different logic for different
 response formats you can use ``$this->request->is()`` to build the required
-conditional logic.
+conditional logic. You can also set your controllers' supported view classes
+using the ``addViewClasses()`` method which will merge the provided views with
+those held in the ``viewClasses`` property.
 
 .. note::
     View classes must implement the static ``contentType()`` hook method to
     participate in content-type negotiation.
+
+
+.. versionadded:: 4.5.0
+    ``addViewClasses()`` was added.
 
 
 Content Type Negotiation Fallbacks
@@ -352,6 +358,22 @@ content-type negotiation is attempted.
     Prior to 4.4 you must use :doc:`/controllers/components/request-handling`
     instead of ``viewClasses()``.
 
+Using AjaxView
+==============
+
+In applications that use hypermedia or AJAX clients, you often need to render
+view contents without the wrapping layout. You can use the ``AjaxView`` that
+is bundled with the application skeleton::
+
+    // In a controller action, or in beforeRender.
+    if ($this->request->is('ajax')) {
+        $this->viewBuilder()->setClassName('Ajax');
+    }
+
+``AjaxView`` will respond as ``text/html`` and use the ``ajax`` layout.
+Generally this layout is minimal or contains client specific markup. This
+replaces usage of ``RequestHandlerComponent`` automatically using the
+``AjaxView``.
 
 Redirecting to Other Pages
 ==========================
@@ -410,12 +432,30 @@ the named action::
     // list page.
     $this->setAction('index');
 
+
+.. deprecated:: 4.2.0
+    Use redirects or call the other action as a method.
+
 Loading Additional Models
 =========================
 
+.. php:method:: fetchModel(string $alias, array $config = [])
+
+The ``fetchModel()`` method is useful to load models or ORM tables that
+are not the controller's default. Models retrieved with this method will not be
+set as properties on your controller::
+
+    // Get an ElasticSearch model
+    $articles = $this->fetchModel('Articles', 'Elastic');
+
+    // Get a webservices model
+    $github = $this->fetchModel('GitHub', 'Webservice');
+
+.. versionadded:: 4.5.0
+
 .. php:method:: fetchTable(string $alias, array $config = [])
 
-The ``fetchTable()`` function comes handy when you need to use a table that is not
+The ``fetchTable()`` method comes handy when you need to use an ORM table that is not
 the controller's default one::
 
     // In a controller method.
@@ -430,7 +470,7 @@ the controller's default one::
 
 .. note::
 
-    ``Controller::fetchTable()`` does not create a controller property with the name of the table alias,
+    ``Controller::fetchTable()`` does not create a proeprty controller property with the name of the table alias,
     e.g. ``$this->Articles``, as  ``Controller::loadModel()`` does.
 
 Paginating a Model

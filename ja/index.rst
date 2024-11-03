@@ -20,7 +20,7 @@ CakePHP クックブックは、オープンに開発されている、コミュ
     どこでも CakePHP のレシピをお楽しみいただけます。PDF と EPUB をご用意しましたので、
     多くのデバイス上でオフラインでドキュメントを読むことができます。
 
-    - `PDF (英語) <../_downloads/en/CakePHPCookbook.pdf>`_
+    - `PDF (英語) <../_downloads/en/CakePHPBook.pdf>`_
     - `EPUB <../_downloads/ja/CakePHP.epub>`_
     - `オリジナルソース <https://github.com/cakephp/docs>`_
 
@@ -51,5 +51,5 @@ CakePHP クックブックは、オープンに開発されている、コミュ
   バリデーションやあなたのアプリケーションのドメインロジックを処理します。
 
 .. meta::
-    :title lang=ja: .. CakePHP Cookbook documentation master file, created by
-    :keywords lang=ja: doc models,documentation master,presentation layer,documentation project,quickstart,original source,sphinx,liking,cookbook,validity,conventions,validation,cakephp,accuracy,storage and retrieval,heart,blog,project hope
+    :title lang=ja: .. CakePHP Book documentation master file, created by
+    :keywords lang=ja: doc models,documentation master,presentation layer,documentation project,quickstart,original source,sphinx,liking,book,validity,conventions,validation,cakephp,accuracy,storage and retrieval,heart,blog,project hope

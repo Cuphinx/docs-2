@@ -1035,6 +1035,18 @@ by setting data to the ``_joinData`` property::
 
     $studentsTable->save($student);
 
+The example above will only work if the property ``_joinData`` is already a
+reference to a Join Table Entity. If you don't already have a ``_joinData``
+entity, you can create one using ``newEntity()``::
+
+    $coursesMembershipsTable = $this->getTableLocator()->get('CoursesMemberships');
+    $student->courses[0]->_joinData = $coursesMembershipsTable->newEntity([
+        'grade' => 80.12,
+        'days_attended' => 30
+    ]);
+
+    $studentsTable->save($student);
+
 The ``_joinData`` property can be either an entity, or an array of data if you
 are saving entities built from request data. When saving junction table data
 from request data your POST data should look like::
@@ -1082,9 +1094,12 @@ column Types::
 
     class UsersTable extends Table
     {
-        public function initialize(): void
+        public function getSchema(): TableSchemaInterface
         {
-            $this->getSchema()->setColumnType('preferences', 'json');
+            $schema = parent::getSchema();
+            $schema->setColumnType('preferences', 'json');
+
+            return $schema;
         }
     }
 
@@ -1257,8 +1272,8 @@ interface as well::
     // Publish all the unpublished articles.
     function publishAllUnpublished()
     {
-        $this->query()
-            ->update()
+        // Prior to 4.5 use $this->query() instead.
+        $this->updateQuery()
             ->set(['published' => true])
             ->where(['published' => false])
             ->execute();
